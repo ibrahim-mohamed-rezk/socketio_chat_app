@@ -30,7 +30,7 @@ io.on("connection", (socket) => {
 
   socket.on("join_room", (data) => {
     socket.join(data);
-    console.log("user joined", data);
+    socket.emit("joined", `user_joined ${data}`);
   });
 
   socket.on("send_message", (data) => {
