@@ -35,7 +35,6 @@ io.on("connection", (socket) => {
 
   socket.on("send_message", (data) => {
     socket.to(data.id).emit("reseve_message", data);
-    console.log(data);
     const newUser = new Message({ ...data });
     newUser
       .save()
@@ -49,6 +48,10 @@ io.on("connection", (socket) => {
         socket.emit("display_messages", messages);
       })
       .catch((err) => console.error("Error", err));
+  });
+
+  socket.on("typing", (id) => {
+    socket.to(id).emit("user_typing", "user typing");
   });
 
   socket.on("disconnect", () => {
